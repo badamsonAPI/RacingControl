@@ -4,6 +4,8 @@ import {
   BarElement,
   CategoryScale,
   Chart as ChartJS,
+  type ChartData,
+  type ChartDataset,
   type ChartOptions,
   Legend,
   LinearScale,
@@ -67,8 +69,10 @@ export function RaceCharts({
   const hasStintData = stintPaceData.length > 0;
   const hasPitData = pitStopData.length > 0;
 
-  const lapDistributionData = {
-    datasets: lapTimeDatasets.map((dataset) => ({
+  const lapDistributionData: ChartData<"line", { x: number; y: number }[]> = {
+    datasets: lapTimeDatasets.map<
+      ChartDataset<"line", { x: number; y: number }[]>
+    >((dataset) => ({
       label: dataset.label,
       data: dataset.points.map((point) => ({
         x: point.lapNumber,
@@ -79,7 +83,7 @@ export function RaceCharts({
       tension: 0.3,
       pointRadius: 3,
       fill: false,
-      parsing: false as const,
+      parsing: false,
     })),
   };
 
